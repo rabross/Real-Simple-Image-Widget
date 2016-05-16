@@ -4,6 +4,18 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/widget_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="3.0"
+        android:shadowDy="3.0"
+        android:shadowRadius="5.0"
+        android:text="@string/loading"
+        android:textColor="@android:color/white"/>
+
     <ImageView
         android:id="@+id/widget_image"
         android:layout_width="match_parent"
@@ -11,16 +23,5 @@
         android:adjustViewBounds="true"
         android:clickable="true"
         android:scaleType="fitCenter"/>
-
-    <TextView
-        android:id="@+id/widget_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:shadowColor="@android:color/black"
-        android:shadowDx="3.0"
-        android:shadowDy="3.0"
-        android:shadowRadius="5.0"
-        android:textColor="@android:color/white"
-        android:visibility="gone"/>
 
 </FrameLayout>

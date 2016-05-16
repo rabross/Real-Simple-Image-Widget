@@ -1,7 +1,9 @@
 package com.rabross.android.realsimpleimagewidget;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.net.Uri;
@@ -75,6 +77,12 @@ class WidgetManager {
                 .into(new AppWidgetTarget(mContext, remoteViews, R.id.widget_image, new int[] {widgetId}));
 
         save(widgetId, uri);
+
+        //Add configure on touch
+        Intent configIntent = new Intent(mContext, ConfigurationActivity.class);
+        configIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+        PendingIntent configPendingIntent = PendingIntent.getActivity(mContext, widgetId, configIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.widget_image, configPendingIntent);
     }
 
     private void save(int widgetId, Uri uri){
