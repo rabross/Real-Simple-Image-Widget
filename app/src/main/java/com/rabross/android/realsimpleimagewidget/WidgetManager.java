@@ -5,17 +5,21 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.RemoteViews;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.AppWidgetTarget;
+import com.bumptech.glide.request.target.Target;
 
 /**
  * Created by RabRoss on 02/05/2016.
@@ -73,7 +77,22 @@ class WidgetManager {
 
         Glide.with( mContext ) // safer!
                 .load(uri)
-                .asBitmap().fitCenter().override(width, height)
+                .asBitmap()
+                .fitCenter()
+                .override(width, height)
+                .listener(new RequestListener<Uri, Bitmap>() {
+                    @Override
+                    public boolean onException(Exception e, Uri model, Target<Bitmap> target, boolean isFirstResource) {
+                        remoteViews.setTextViewText(R.id.widget_text, mContext.getString(R.string.error_failed));
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Bitmap resource, Uri model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        remoteViews.setViewVisibility(R.id.widget_text, View.GONE);
+                        return false;
+                    }
+                })
                 .into(new AppWidgetTarget(mContext, remoteViews, R.id.widget_image, new int[] {widgetId}));
 
         save(widgetId, uri);

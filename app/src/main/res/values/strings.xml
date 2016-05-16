@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Real Simple Image Widget</string>
     <string name="loading">Loading image&#8230;</string>
+    <string name="error_failed">Failed to load image</string>
 </resources>
