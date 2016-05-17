@@ -1,5 +1,5 @@
 # Real Simple Image Widget
-The real simple image widget for Android. Place the widget and pick an image. Done.
+A real simple image widget for Android. Place the widget and pick an image. Done.
 
 
 ## Purpose
