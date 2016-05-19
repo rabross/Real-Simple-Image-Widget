@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 public class ConfigurationActivity extends AppCompatActivity {
 
-    private static final short RESULT_CODE = 8962;
+    private static final short REQUEST_CODE = 8962;
     private static final String MIME_TYPE = "image/*";
 
     private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
@@ -35,24 +35,29 @@ public class ConfigurationActivity extends AppCompatActivity {
 
         startActivityForResult(
                 Intent.createChooser(intent, null),
-                RESULT_CODE);
+                REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case RESULT_CODE:
-                if (data != null) {
+        if (requestCode == REQUEST_CODE) {
+            switch (resultCode) {
+                case RESULT_OK:
+                    if (data != null) {
 
-                    new WidgetManager(getApplicationContext()).setWidget(mAppWidgetId, data.getData());
+                        new WidgetManager(getApplicationContext()).setWidget(mAppWidgetId, data.getData());
 
-                    Intent resultValue = new Intent();
-                    resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                            mAppWidgetId);
-                    setResult(RESULT_OK, resultValue);
+                        Intent resultValue = new Intent();
+                        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                                mAppWidgetId);
+                        setResult(RESULT_OK, resultValue);
+                        finish();
+                    }
+                    return;
+                case RESULT_CANCELED:
+                default:
                     finish();
-                }
-                break;
+            }
         }
     }
 }
