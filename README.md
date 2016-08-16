@@ -1,3 +1,5 @@
+[![License Apache 2.0](https://img.shields.io/badge/License-WTFPL%202.0-blue.svg?style=true)](http://www.wtfpl.net/txt/copying/)
+
 # Real Simple Image Widget
 A real simple image widget for Android. Place the widget and pick an image. Done.
 
