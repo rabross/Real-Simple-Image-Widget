@@ -100,7 +100,7 @@ class WidgetManager {
         //Add configure on touch
         Intent configIntent = new Intent(mContext, ConfigurationActivity.class);
         configIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-        PendingIntent configPendingIntent = PendingIntent.getActivity(mContext, widgetId, configIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent configPendingIntent = PendingIntent.getActivity(mContext, widgetId, configIntent, PendingIntent.FLAG_ONE_SHOT);
         remoteViews.setOnClickPendingIntent(R.id.widget_image, configPendingIntent);
     }
 
