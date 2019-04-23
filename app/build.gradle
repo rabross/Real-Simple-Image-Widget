@@ -9,8 +9,8 @@ android {
         applicationId "com.rabross.android.realsimpleimagewidget"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 3
-        versionName "1.1.0"
+        versionCode 4
+        versionName "1.1.1"
     }
     buildTypes {
         release {
@@ -25,7 +25,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
     implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {
