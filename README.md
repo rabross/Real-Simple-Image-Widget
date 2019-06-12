@@ -1,4 +1,4 @@
-[![License Apache 2.0](https://img.shields.io/badge/License-WTFPL%202.0-blue.svg?style=true)](https://raw.githubusercontent.com/rabross/Real-Simple-Image-Widget/master/LICENSE)
+[![License WTFPL 2.0](https://img.shields.io/badge/License-WTFPL%202.0-blue.svg?style=true)](https://raw.githubusercontent.com/rabross/Real-Simple-Image-Widget/master/LICENSE)
 
 # Real Simple Image Widget
 A real simple image widget for Android. Place the widget and pick an image. Done.
