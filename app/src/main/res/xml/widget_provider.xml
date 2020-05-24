@@ -2,6 +2,7 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:configure="com.rabross.android.realsimpleimagewidget.ConfigurationActivity"
     android:initialLayout="@layout/widget"
+    android:updatePeriodMillis="0"
     android:minHeight="110dp"
     android:minWidth="110dp"
     android:minResizeWidth="40dp"
