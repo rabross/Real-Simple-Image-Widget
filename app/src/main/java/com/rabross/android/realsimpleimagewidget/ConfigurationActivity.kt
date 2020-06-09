@@ -93,6 +93,6 @@ class ConfigurationActivity : AppCompatActivity() {
             type = "image/*"
             action = Intent.ACTION_GET_CONTENT
         }
-        startActivityForResult(Intent.createChooser(intent, "Test"), REQUEST_CODE)
+        startActivityForResult(Intent.createChooser(intent, null), REQUEST_CODE)
     }
 }
