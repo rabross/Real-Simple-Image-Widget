@@ -3,6 +3,7 @@ package com.rabross.android.realsimpleimagewidget
 import android.Manifest
 import android.app.Activity
 import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,20 +13,31 @@ import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.rabross.android.realsimpleimagewidget.adapter.WidgetRemoteViewsHolder
+import com.rabross.android.realsimpleimagewidget.adapter.WidgetRemotesViewAdapter
+import com.rabross.android.realsimpleimagewidget.model.WidgetPresenter
+import com.rabross.android.realsimpleimagewidget.model.WidgetViewModel
+import com.rabross.android.realsimpleimagewidget.imageloader.WidgetImageLoaderImpl
 
 const val REQUEST_CODE = 8962
 
 class ConfigurationActivity : AppCompatActivity() {
 
-    private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
+    private lateinit var viewHolder: WidgetRemoteViewsHolder
+    private val appWidgetId: Int by lazy {
+        intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, INVALID_APPWIDGET_ID) ?: INVALID_APPWIDGET_ID
+    }
+
+    private val remoteViewAdapter: WidgetRemotesViewAdapter by lazy {
+        val imageLoader = WidgetImageLoaderImpl(application)
+        val presenter = WidgetPresenter(imageLoader)
+        WidgetRemotesViewAdapter(presenter, packageName)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        intent.extras?.let {
-            appWidgetId = it.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID)
-        } ?: finish()
+        if(appWidgetId == INVALID_APPWIDGET_ID) finish()
+        viewHolder = remoteViewAdapter.onCreateRemoteViewsHolder(this)
     }
 
     override fun onStart() {
@@ -55,9 +67,9 @@ class ConfigurationActivity : AppCompatActivity() {
         }
 
         fun bind(uri: String) {
-            val adapter = RemoteViewAdapter(this.applicationContext)
-            AppWidgetManager.getInstance(this).updateAppWidget(appWidgetId, adapter.getView())
-            adapter.bind(appWidgetId, uri)
+            val viewModel = WidgetViewModel(appWidgetId, uri)
+            AppWidgetManager.getInstance(this).updateAppWidget(appWidgetId, viewHolder.remoteViews)
+            remoteViewAdapter.onBindRemoteViewsHolder(viewModel, viewHolder)
         }
 
         fun setResultValue() {
