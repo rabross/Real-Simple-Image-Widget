@@ -9,8 +9,8 @@ android {
         applicationId "com.rabross.android.realsimpleimagewidget"
         minSdkVersion min_sdk_version
         targetSdkVersion target_sdk_version
-        versionCode 7
-        versionName "1.4.0"
+        versionCode 8
+        versionName "1.5.0"
     }
     buildTypes {
         release {
