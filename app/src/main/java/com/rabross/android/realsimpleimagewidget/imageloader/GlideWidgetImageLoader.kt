@@ -11,13 +11,14 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 import com.bumptech.glide.request.target.AppWidgetTarget
 import com.rabross.android.realsimpleimagewidget.R
-import com.rabross.android.realsimpleimagewidget.util.bytesPerPixel
+import com.rabross.android.realsimpleimagewidget.bytesPerPixel
 import java.nio.charset.Charset
 import java.security.MessageDigest
+import kotlin.math.floor
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
-class WidgetImageLoaderImpl(private val context: Context): WidgetImageLoader {
+class GlideWidgetImageLoader(private val context: Context): WidgetImageLoader {
 
     override fun load(@IdRes viewIdRes: Int, remoteViews: RemoteViews, widgetId: Int, uri: String) {
 
@@ -43,21 +44,24 @@ class WidgetImageLoaderImpl(private val context: Context): WidgetImageLoader {
     }
 }
 
-
 private class SizeLimitingBitmapTransformation(val width: Int, val height: Int, val screenSizeMultiplier: Float) : BitmapTransformation() {
 
     override fun transform(pool: BitmapPool, toTransform: Bitmap, outWidth: Int, outHeight: Int): Bitmap {
         val bytesPerPixel = toTransform.config.bytesPerPixel()
-        val sideScaleFactor = sqrt(byteLimit(bytesPerPixel) / bytesPerPixel / (outWidth * outHeight).toDouble())
+        val sideScaleFactor = sqrt(byteLimit(bytesPerPixel) / bytesPerPixel / (outWidth * outHeight))
         val scaledWidth = outWidth * sideScaleFactor
         val scaledHeight = outHeight * sideScaleFactor
-
-        return Bitmap.createScaledBitmap(toTransform, scaledWidth.roundToInt(), scaledHeight.roundToInt(), false)
+        return Bitmap.createScaledBitmap(toTransform, scaledWidth.floorToInt(), scaledHeight.floorToInt(), true)
     }
 
     override fun updateDiskCacheKey(messageDigest: MessageDigest) {
         messageDigest.update(javaClass.name.toByteArray(Charset.forName("UTF-8")))
     }
 
+    /**
+     * https://developer.android.com/reference/android/appwidget/AppWidgetManager#updateAppWidget(int[],%20android.widget.RemoteViews)
+     */
     private fun byteLimit(bytesPerPixel: Int) = width * height * bytesPerPixel * screenSizeMultiplier
+
+    private fun Float.floorToInt() = floor(this).roundToInt()
 }

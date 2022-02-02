@@ -6,7 +6,7 @@ import android.content.Context
 import com.rabross.android.realsimpleimagewidget.adapter.WidgetRemotesViewAdapter
 import com.rabross.android.realsimpleimagewidget.model.WidgetPresenter
 import com.rabross.android.realsimpleimagewidget.model.WidgetViewModel
-import com.rabross.android.realsimpleimagewidget.imageloader.WidgetImageLoaderImpl
+import com.rabross.android.realsimpleimagewidget.imageloader.GlideWidgetImageLoader
 
 open class WidgetProvider : AppWidgetProvider() {
 
@@ -18,7 +18,7 @@ open class WidgetProvider : AppWidgetProvider() {
     private fun restoreActiveWidgets(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         val preferences = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
         val packageName = context.packageName
-        val imageLoader = WidgetImageLoaderImpl(context.applicationContext)
+        val imageLoader = GlideWidgetImageLoader(context.applicationContext)
         val presenter = WidgetPresenter(imageLoader)
         val remoteViewAdapter = WidgetRemotesViewAdapter(presenter, packageName)
 

@@ -17,7 +17,7 @@ import com.rabross.android.realsimpleimagewidget.adapter.WidgetRemoteViewsHolder
 import com.rabross.android.realsimpleimagewidget.adapter.WidgetRemotesViewAdapter
 import com.rabross.android.realsimpleimagewidget.model.WidgetPresenter
 import com.rabross.android.realsimpleimagewidget.model.WidgetViewModel
-import com.rabross.android.realsimpleimagewidget.imageloader.WidgetImageLoaderImpl
+import com.rabross.android.realsimpleimagewidget.imageloader.GlideWidgetImageLoader
 
 const val REQUEST_CODE = 8962
 
@@ -27,11 +27,8 @@ class ConfigurationActivity : AppCompatActivity() {
     private val appWidgetId: Int by lazy {
         intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, INVALID_APPWIDGET_ID) ?: INVALID_APPWIDGET_ID
     }
-
     private val remoteViewAdapter: WidgetRemotesViewAdapter by lazy {
-        val imageLoader = WidgetImageLoaderImpl(application)
-        val presenter = WidgetPresenter(imageLoader)
-        WidgetRemotesViewAdapter(presenter, packageName)
+        WidgetRemotesViewAdapter(WidgetPresenter(GlideWidgetImageLoader(application)), packageName)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +44,7 @@ class ConfigurationActivity : AppCompatActivity() {
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             REQUEST_CODE -> {
                 if (grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED) {

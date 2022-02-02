@@ -1,4 +1,4 @@
-package com.rabross.android.realsimpleimagewidget.util
+package com.rabross.android.realsimpleimagewidget
 
 import android.graphics.Bitmap
 
