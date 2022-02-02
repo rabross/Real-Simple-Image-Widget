@@ -3,7 +3,7 @@
 buildscript {
     ext {
         gradle_version = '4.0.0'
-        kotlin_version = '1.4.30'
+        kotlin_version = '1.6.10'
     }
     repositories {
         jcenter()
@@ -24,13 +24,13 @@ allprojects {
         google()
     }
     ext {
-        android_compile_sdk_version = 30
-        android_build_tools_version = '28.0.3'
+        android_compile_sdk_version = 31
+        android_build_tools_version = '29.0.2'
         min_sdk_version = 14
         target_sdk_version = 30
 
         androidx = ext {
-            app_compat_version = '1.2.0'
+            app_compat_version = '1.4.1'
         }
 
         junit_version = '4.13.1'
